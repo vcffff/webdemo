@@ -1,16 +1,27 @@
-const display=document.getElementById("display")
-function appendToDisplay(input){
-    display.value+=input
+const display = document.getElementById("display");
 
+function appendToDisplay(input) {
+    display.value += input;
 }
-function calculate(){
-    try{
-    display.value = eval(display.value)
-    }
-    catch(error){
-        display.value = "POSHOL NAXUI";
+
+function calculate() {
+    try {
+        let expression = display.value.replace(/√(\d+|\(.+?\))/g, (match, number) => {
+            return `Math.sqrt(${number})`;
+        });
+        display.value = eval(expression);
+    } catch (error) {
+        display.value = "ERROR";
     }
 }
-function clearDisplay(){
-    display.value = " ";
+
+function clearDisplay() {
+    display.value = "";
+}
+
+function backspace() {
+    display.value = display.value.slice(0, -1);
+}
+function append() {
+    display.value += "√";
 }
